@@ -1,0 +1,60 @@
+urlpatterns = [
+    # path('admin/', admin.site.urls),
+    path('login/', views.login),
+    path('adminhome/',views.adminhome),
+    path('login_post/',views.login_post),
+    path('admin_bookingview/',views.admin_bookingview),
+    # path('admin_bookingview_post/',views.admin_bookingview_post),
+    path('admin_bookstatus/',views.admin_bookstatus),
+    # path('admin_bookstatus_post/',views.admin_bookstatus_post),
+    path('admin_galleryadd/',views.admin_galleryadd),
+    path('admin_galleryadd_post/',views.admin_galleryadd_post),
+    path('admin_galleryedit/',views.admin_galleryedit),
+    path('admin_galleryedit_post/',views.admin_galleryedit_post),
+    path('admin_galleryview/',views.admin_galleryview),
+    path('admin_password/',views.admin_password),
+    path('admin_password_post/',views.admin_password_post),
+    path('admin_complaint/',views.view_complaint),
+    path('admin_complaint_post/',views.view_complaint_post),
+
+    path('view_complaint_replay_user/', views.view_complaint_replay_user),
+    path('admin_payment/',views.admin_payment),
+    path('admin_payment_post/',views.admin_payment_post),
+    path('admin_serviceadd/',views.admin_serviceadd),
+    path('admin_serviceadd_post/',views.admin_serviceadd_post),
+    path('admin_serviceedit/<id>',views.admin_serviceedit),
+    path('admin_serviceedit_post/',views.admin_serviceedit_post),
+    path('admin_serviceview/',views.admin_serviceview),
+    path('admin_serviceview_post/',views.admin_serviceview_post),
+    path('admin_review/',views.admin_review),
+    path('admin_replay/<id>',views.admin_replay),
+    path('admin_replay_post/',views.admin_replay_post),
+    path('admin_review_post/',views.admin_review_post),
+
+    path('userhome/',views. userhome),
+    path('user_bookadd/',views. user_bookadd),
+    path('user_bookadd_post/',views.user_bookadd_post),
+    path('user_bookview/',views.user_bookview),
+    path('user_bookview_post/',views.user_bookview_post),
+    path('user_bookstatus/',views.user_bookstatus),
+    path('user_bookstatus_post/',views.user_bookstatus_post),
+    path('user_complaint/',views.user_complaint),
+    path('user_complaint_post/',views.user_complaint_post),
+    path('user_gallery/',views.user_gallery),
+    path('user_password/',views.user_password),
+    path('user_password_post/',views.user_password_post),
+    path('user_registrationadd/',views.user_registrationadd),
+    path('user_registrationadd_post/',views.user_registrationadd_post),
+    path('user_registrationview/',views.user_registrationview),
+    path('user_reviewadd/',views.user_reviewadd),
+    path('user_reviewadd_post/',views.user_reviewadd_post),
+    path('user_serviceview/',views.user_serviceview),
+    path('user_serviceview_post/',views.user_serviceview_post),
+
+
+
+
+
+
+
+]
