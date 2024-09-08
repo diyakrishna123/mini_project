@@ -1,0 +1,414 @@
+from datetime import datetime
+
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.shortcuts import render
+
+# Create your views here.
+from myapp.models import *
+
+
+def login(request):
+    return render(request,'login.html')
+
+def login_post(request):
+    username=request.POST['textfield']
+    password=request.POST['textfield2']
+    lg=Login.objects.filter(username=username,password=password)
+    if lg.exists():
+        lg2=Login.objects.get(username=username,password=password)
+        request.session['lid']=lg2.id
+        if lg2.type=="admin":
+            return HttpResponse("""<script>alert("login successfull");window.location='/myapp/adminhome/'</script>""")
+        elif lg2.type=="user":
+            return HttpResponse("""<script>alert("login successfull");window.location='/myapp/userhome/'</script>""")
+        else:
+            return HttpResponse("""<script>alter("invalid");window.location='/myapp/login/'</cript>""")
+    else:
+        return HttpResponse("""<script>alert("login unsuccessfull")</script>""")
+
+def adminhome(request):
+    return render(request,'admin/adminhome.html')
+
+def admin_serviceadd(request):
+    return render(request,'admin/service_add.html')
+
+def admin_serviceadd_post(request):
+    type=request.POST['textfield2']
+    payment=request.POST['textfield3']
+    description=request.POST['textfield4']
+
+    obj=Service()
+    obj.servicename=type
+    obj.amount=payment
+    obj.description=description
+    obj.save()
+    return HttpResponse("ok")
+
+def admin_serviceview(request):
+    obj=Service.objects.all()
+    return render(request,'admin/service_view.html',{"data":obj})
+
+def admin_serviceview_post(request):
+    type=request.POST['textfield']
+    obj=Service.objects.filter(servicename__icontains=type)
+    return render(request,'admin/service_view.html',{"data":obj})
+
+
+def admin_serviceedit(request,id):
+    obj=Service.objects.get(id=id)
+    return render(request,'admin/service_edit.html',{"data":obj})
+
+def admin_serviceedit_post(request):
+    id=request.POST['id']
+    type = request.POST['textfield2']
+    payment = request.POST['textfield3']
+    description = request.POST['textfield4']
+
+    obj = Service.objects.get(id=request.session['lid'])
+    obj.servicename = type
+    obj.amount = payment
+    obj.description = description
+    obj.save()
+    return HttpResponse("ok")
+
+
+
+def admin_galleryadd(request):
+    return render(request,'admin/gallery_add.html')
+
+def admin_galleryadd_post(request):
+
+    photo1=request.FILES['pic1']
+    fs1=FileSystemStorage()
+    d1=datetime.now().strftime('%Y%m%d-%H%M%S')+'.jpg'
+    p1=fs1.save(d1,photo1)
+    path1=fs1.url(d1)
+
+    photo2=request.FILES['pic2']
+    fs2=FileSystemStorage()
+    d2=datetime.now().strftime('%Y%m%d-%H%M%S')+'.jpg'
+    p2=fs2.save(d2,photo2)
+    path2=fs2.url(d2)
+
+    photo3=request.FILES['pic3']
+    fs3=FileSystemStorage()
+    d3=datetime.now().strftime('%Y%m%d-%H%M%S')+'.jpg'
+    p3=fs3.save(d3,photo3)
+    path3=fs3.url(d3)
+
+    vedio=request.FILES['vid']
+    fs4 = FileSystemStorage()
+    d4 = datetime.now().strftime('%Y%m%d-%H%M%S') + '.mp4'
+    p4 = fs4.save(d4,vedio)
+    path4 = fs4.url(d4)
+
+    obj=Gallery()
+    obj.photo1=path1
+    obj.photo2=path2
+    obj.photo3=path3
+    obj.vedio=path4
+    obj.SERVICE_id=request.session['lid']
+    obj.save()
+    return HttpResponse("ok")
+
+
+
+def admin_galleryedit(request):
+    return render(request,'admin/gallery_edit.html')
+def admin_galleryedit_post(request):
+    #photo1 = request.POST['fileField3']
+    #photo2 = request.POST['fileField4']
+    #photo3 = request.POST['fileField']
+    #vedio = request.POST['fileField2']
+    #return HttpResponse("ok")
+
+    photo1=request.FILES['pic1']
+    fs1=FileSystemStorage()
+    d1=datetime.now().strftime('%Y%m%d-%H%M%S')+'.jpg'
+    p1=fs1.save(d1,photo1)
+    path1=fs1.url(d1)
+
+    photo2=request.FILES['pic2']
+    fs2=FileSystemStorage()
+    d2=datetime.now().strftime('%Y%m%d-%H%M%S')+'.jpg'
+    p2=fs2.save(d2,photo2)
+    path2=fs2.url(d2)
+
+    photo3=request.FILES['pic3']
+    fs3=FileSystemStorage()
+    d3=datetime.now().strftime('%Y%m%d-%H%M%S')+'.jpg'
+    p3=fs3.save(d3,photo3)
+    path3=fs3.url(d3)
+
+    vedio=request.FILES['vid']
+    fs4 = FileSystemStorage()
+    d4 = datetime.now().strftime('%Y%m%d-%H%M%S') + '.mp4'
+    p4 = fs4.save(d4,vedio)
+    path4 = fs4.url(d4)
+
+    obj=Gallery()
+    obj.photo1=path1
+    obj.photo2=path2
+    obj.photo3=path3
+    obj.vedios=path4
+    obj.SERVICE_id=request.session['lid']
+    obj.save()
+    return HttpResponse("ok")
+
+
+
+
+def admin_galleryview(request):
+    res=Gallery.objects.all()
+    return render(request,'admin/gallery_view.html',{'data':res})
+
+def admin_bookingview(request):
+    obj = Booking.objects.all()
+    return render(request,'admin/booking_view_admin.html',{"data":obj})
+
+#                                                           vvbbbbbbbbbbbbbbn
+#     id=request.
+#     fromdate=request.POST['textfield']
+#     todate=request.POST['textfield2']
+#
+#     obj=Booking()
+#     obj.date=datetime.datetime.now().today()
+#     obj.time=
+#     obj.status='pending'
+#     obj.user=Login.objects.get(user__LOGIN_id=request.session['lid'])
+#     obj.SERVICE=sid
+#     return render(request,'admin/booking_view_admin.html')
+
+
+
+def admin_bookstatus(request):
+    obj = Booking.objects.all()
+    return render(request,'admin/bookingstatus_view.html')
+# def admin_bookstatus_post(request):
+#     fromdate=request.POST['textfield']
+#     todate=request.POST['textfield2']
+#     return render(request,'admin/bookingstatus_view.html')
+
+
+
+
+def view_complaint(request):
+    data=Complaint.objects.all()
+    return render(request,'admin/complaint_view.html',{'data':data})
+
+def view_complaint_post(request):
+    fromdate = request.POST['textfield']
+    todate = request.POST['textfield2']
+
+    se = Complaint.objects.filter(date__range=[fromdate,todate])
+    return render(request,'admin/complaint_view.html', {"data":se})
+
+
+
+def view_complaint_replay_user(request):
+    bj = Complaint.objects.filter(USER__LOGIN_id=request.session['lid'])
+    return render(request,'user/view_complaint_replay.html',{'data':bj})
+
+
+
+
+
+def admin_replay(request,id):
+    bj = Complaint.objects.get(id=id)
+    return render(request,'admin/send repla.html',{'data':bj})
+
+def admin_replay_post(request):
+    id=request.POST['id']
+    replay=request.POST['textarea']
+    robj=Complaint.objects.get(id=id)
+    robj.status='Replayed'
+    robj.reply=replay
+    robj.save()
+
+    return HttpResponse("""<script>alert("replay updated");window.location='/myapp/admin_complaint/'</script>""")
+
+
+def admin_payment(request):
+    return render(request,'admin/payment_view.html')
+def admin_payment_post(request):
+    fromdate=request.POST['textfield']
+    todate=request.POST['textfield2']
+
+    pobj=Payment()
+    pobj.date=datetime.now()
+    pobj.status='pending'
+    pobj.USER=User.objects.get(LOGIN_id=request.session['lid'])
+
+    pobj.BOOK_id=id
+    return render(request,'admin/payment_view.html')
+
+
+def admin_review(request):
+    return render(request,'admin/review_view.html')
+def admin_review_post(request):
+    fromdate = request.POST['textfield']
+    todate = request.POST['textfield2']
+    return render(request,'admin/review_view.html')
+
+
+
+
+def admin_password(request):
+    return render(request,'admin/password.html')
+
+def admin_password_post(request):
+    id=request.session['lid']
+    oldpassword=request.POST['textfield']
+    newpassword=request.POST['textfield2']
+    conformpassword=request.POST['textfield3']
+
+    chpass=Login.objects.get(id=id)
+    if chpass.password==oldpassword:
+        if newpassword==conformpassword:
+            Login.objects.filter(id=id).update(password=newpassword)
+            return HttpResponse("ok")
+        else:
+            return HttpResponse("invalid")
+    else:
+        return HttpResponse("invalid")
+
+
+def userhome(request):
+    return render(request,'user/userhome.html')
+
+
+def user_bookadd(request):
+    return render(request,'user/booking_add_in.html')
+def user_bookadd_post(request):
+    time=request.POST['textfield']
+    date=request.POST['textfield2']
+    return HttpResponse("ok")
+
+
+def user_bookview(request):
+    return render(request,'user/booking_view.html')
+def user_bookview_post(request):
+    fromdate = request.POST['textfield']
+    todate = request.POST['textfield2']
+    return render(request,'user/booking_view.html')
+
+
+
+def user_bookstatus(request):
+    return render(request,'user/bookingstatus_view.html')
+def user_bookstatus_post(request):
+    fromdate = request.POST['textfield']
+    todate = request.POST['textfield2']
+    return render(request,'user/bookingstatus_view.html')
+
+
+def user_complaint(request):
+    return render(request,'user/compaint_sent_user.html')
+def user_complaint_post(request):
+    complaint=request.POST['textarea']
+    cobj=Complaint()
+    cobj.date=datetime.now()
+    cobj.complaint=complaint
+    cobj.reply='pending'
+    cobj.status='pending'
+    cobj.USER=User.objects.get(LOGIN_id=request.session['lid'])
+    cobj.save()
+    return HttpResponse("ok")
+
+
+def user_gallery(request):
+    return render(request,'user/gallery_view_user.html')
+
+
+
+def user_password(request):
+    return render(request, 'user/password.html')
+def user_password_post(request):
+    id = request.session['lid']
+    oldpassword = request.POST['textfield']
+    newpassword = request.POST['textfield2']
+    conformpassword = request.POST['textfield3']
+    chpass = Login.objects.get(id=id)
+
+    if chpass.password == oldpassword:
+        if newpassword == conformpassword:
+            Login.objects.filter(id=id).update(password=newpassword)
+            return HttpResponse("ok")
+        else:
+            return HttpResponse("invalid")
+    else:
+        return HttpResponse("invalid")
+
+
+
+
+def user_registrationadd(request):
+    return render(request,'user/reg_addform.html')
+
+def user_registrationadd_post(request):
+    name=request.POST['textfield']
+    email=request.POST['textfield2']
+    phone=request.POST['textfield3']
+    gender=request.POST['CheckboxGroup1']
+    place=request.POST['textarea']
+    state=request.POST['textfield7']
+    district=request.POST['textfield6']
+    pincode=request.POST['textfield5']
+    post=request.POST['textfield4']
+    password=request.POST['textfield']
+    change_password=request.POST['textfield']
+
+    lobj=Login()
+    lobj.username=email
+    lobj.password=password
+    lobj.type='user'
+    lobj.save()
+
+    obj=User()
+    if password==change_password:
+        obj.name=name
+        obj.email=email
+        obj.phone=phone
+        obj.gender=gender
+        obj.place=place
+        obj.state=state
+        obj.district=district
+        obj.pin=pincode
+        obj.post=post
+        obj.password=password
+        obj.change_password=change_password
+        obj.LOGIN=lobj
+        obj.save()
+    else:
+        return HttpResponse("invalid")
+    return HttpResponse("ok")
+
+
+def user_registrationview(request):
+    return render(request,'user/reg_view_user.html')
+
+
+def user_reviewadd(request):
+    return render(request,'user/review_add.html')
+def user_reviewadd_post(request):
+    review=request.POST['textfield3']
+    rating=request.POST['textfield4']
+    robj=Review()
+    robj.date=datetime.now()
+    robj.review='pending'
+    robj.rating='pending'
+    robj.USER=User.objects.get(LOGIN_id=request.session['lid'])
+    robj.save()
+    return HttpResponse("ok")
+
+
+def user_serviceview(request):
+    return render(request,'user/service_view_user.html')
+def user_serviceview_post(request):
+    type=request.POST['textfield']
+    return render(request,'user/service_view_user.html')
+
+def user_serviceview(request):
+    obj = Service.objects.all()
+    return render(request, 'user/service_view_user.html', {"data": obj})
