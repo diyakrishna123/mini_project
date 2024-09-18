@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>&nbsp;</p>
+<form id="form2" name="form2" method="post" action="">
+  <table width="599" border="1">
+    <tr>
+      <td width="72">From Date</td>
+      <td width="168"><label for="textfield"></label>
+      <input type="date" name="textfield" id="textfield" /></td>
+      <td width="66">To Date</td>
+      <td width="168"><label for="textfield2"></label>
+      <input type="date" name="textfield2" id="textfield2" /></td>
+      <td width="91"><input type="submit" name="button" id="button" value="Search" /></td>
+    </tr>
+  </table>
+</form>
+<p>&nbsp;</p>
+<form id="form1" name="form1" method="post" action="">
+  <table width="613" height="139" border="1">
+    <tr>
+      <th width="83" height="62">sl No.</th>
+      <th width="128">Service Name</th>
+      <th width="60">Price</th>
+      <th width="93">Description</th>
+      <th width="126">From Time</th>
+      <th width="83">To Time</th>
+        <th width="100">Status</th>
+        <th width="100">User</th></tr>
+       {% for i in data %}
+    <tr>
+        <th>&nbsp;{{ forloop.counter }}</th>
+                <th>{{ i.SERVICE.servicename }}</th>
+                <th>{{ i.SERVICE.amount }}</th>
+                <th>{{ i.SERVICE.description }}</th>
+                <th>&nbsp;{{ i.date }}</th>
+                <th>&nbsp;{{ i.from_time }}</th>
+                <th>{{ i.to_time }}</th>
+                <th>&nbsp;{{ i.status }}</th>
+                <th>&nbsp;{{ i.user }}</th>
+
+                <td><a href="">Booking</a> &nbsp;</td>
+    </tr>
+       {% endfor %}
+  </table>
+</form>
+</body>
+</html>
