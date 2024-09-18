@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="">
+ {% csrf_token %}
+  <table width="324" border="1">
+    <tr>
+      <td width="55">Photo1</td>
+      <td width="55">Photo2</td>
+      <td width="58">Photo3</td>
+      <td width="57">Vedio</td>
+    </tr>
+        {% for i in data %}
+    <tr>
+      <td>&nbsp;{{ forloop.counter }}</td>
+        <td>{{ i.SERVICE.servicename }}</td>
+      <td>&nbsp;<img src="{{ i.photo1.url }}" height="50" width="50"> </td>
+      <td><img src="{{ i.photo2.url }}" height="50" width="50">&nbsp;</td>
+      <td>&nbsp;<img src="{{ i.photo3.url }}" height="50" width="50"></td>
+        <td>&nbsp;<a href="{{ i.vedios }}" height="50" width="50">view</a></td>
+      <td>&nbsp;</td>
+
+
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+</html>
