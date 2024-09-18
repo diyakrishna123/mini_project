@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/myapp/user_bookview/">view booking </a><br>
+{#<a href="/myapp/user_bookadd/">add booking </a><br>#}
+<a href="">booking status</a><br>
+<a href="/myapp/user_complaint/">complaint</a><br>
+<a href="/myapp/view_complaint_replay_user/">view complaint</a><br>
+{#<a href="/myapp/user_reviewadd/">rating</a><br>#}
+<a href="/myapp/user_gallery/">gallery</a><br>
+<a href="/myapp/user_password/">change password</a>
+<a href="/myapp/user_registrationadd/">add registration</a><br>
+<a href="">view registration </a></body><br>
+<a href="/myapp/user_serviceview/">service</a><br>
+</body>
+</html>
