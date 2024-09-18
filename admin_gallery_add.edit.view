@@ -1,0 +1,137 @@
+##############----add-----------##########
+<form action="" method="get">
+    <form action="" method="get"></form>
+</form><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Untitled Document</title>
+</head>
+
+<body>
+<form action="/myapp/admin_galleryadd_post/" method="post" enctype="multipart/form-data" name="form1">
+    {% csrf_token %}
+    <table border="1">
+        <tr>
+            <td>
+                service
+            </td>
+            <td>
+                <select name="ser">
+                    {% for i in data %}
+                    <option value="{{ i.id }}">{{ i.servicename }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Photo 1</td>
+            <td>
+
+                <input type="file" name="pic1">
+        </tr>
+        <tr>
+            <td>Photo 2</td>
+            <td>
+                <input type="file" name="pic2"></td>
+        </tr>
+        <tr>
+            <td>Photos3</td>
+            <td>
+                <input type="file" name="pic3"></td>
+        </tr>
+        <tr>
+            <td>Vedios</td>
+            <td>
+                <input type="file" name="vid"></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" name="button" id="button" value="Add"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+######################----------------edit------------------##############
+<form action="" method="get"><form action="" method="get"></form></form><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form action="" method="post" enctype="multipart/form-data" name="form1">
+  <table width="380" border="1">
+    <tr>
+      <td width="65">Photo 1</td>
+      <td width="299"><label for="textfield"></label>
+     
+      <label for="fileField"></label>
+      <input type="file" name="fileField3" id="fileField" />
+     
+     
+      </tr>
+    <tr>
+      <td>Photo 2</td>
+      <td><label for="fileField4"></label>
+      <input type="file" name="fileField4" id="fileField4" /></td>
+    </tr>
+    <tr>
+      <td>Photos3</td>
+      <td><label for="fileField2"></label>
+      <input type="file" name="fileField" id="fileField2" /></td>
+    </tr>
+    <tr>
+      <td>Vedios</td>
+      <td><label for="fileField3"></label>
+      <input type="file" name="vid" id="fileField3" /></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="button" id="button" value="Update" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
+#################################-----------view-------------################################
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <table border="1">
+    <tr>
+        <td>Slno</td>
+        <td>Service name</td>
+      <td>Photo1</td>
+      <td>Photo2</td>
+      <td>Photo3</td>
+      <td>Vedio</td>
+      <td>Action</td>
+    </tr>
+      {% for i in data %}
+    <tr>
+      <td>&nbsp;{{ forloop.counter }}</td>
+        <td>{{ i.SERVICE.servicename }}</td>
+      <td>&nbsp;<img src="{{ i.photo1.url }}" height="50" width="50"> </td>
+      <td><img src="{{ i.photo2.url }}" height="50" width="50">&nbsp;</td>
+      <td>&nbsp;<img src="{{ i.photo3.url }}" height="50" width="50"></td>
+        <td>&nbsp;<a href="{{ i.vedios }}" height="50" width="50">view</a></td>
+      <td>&nbsp;</td>
+      <td><p><a href="#">Edit</a></p>
+      <p><a href="#">Add</a></p>
+      <p><a href="#">Delete</a></p></td>
+    </tr>
+      {% endfor %}
+  </table>
+</form>
+</body>
+</html>
